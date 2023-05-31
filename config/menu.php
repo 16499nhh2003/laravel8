@@ -6,6 +6,11 @@
             'icon' =>  'fa-home'
         ],
         [
+            'label' => 'File Manager',
+            'route' =>  'admin.file', 
+            'icon' =>  'fa-file'
+        ],
+        [
             'label' => 'Product Manager',
             'route' =>  'product.index', 
             'icon' =>  'fa fa-product-hunt',

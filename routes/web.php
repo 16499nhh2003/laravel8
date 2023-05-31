@@ -43,6 +43,7 @@ Route::get('/shop','HomeController@shop')->name('home.shop');
 //admin 27/05/03  21:06
 Route::group(['prefix'=>'admin'],function(){
     Route::get('/','AdminController@dashboard')->name('admin.dashboard');
+    Route::get('/test','AdminController@file')->name('admin.file');
     Route::resources([
         'category' => 'CategoryController', 
         'product' => 'ProductController',
@@ -51,4 +52,5 @@ Route::group(['prefix'=>'admin'],function(){
         'blog' => 'BlogController',
         'order' => 'OrderController',
     ]);
+    Route::fallback('AdminController@error');
 }); 

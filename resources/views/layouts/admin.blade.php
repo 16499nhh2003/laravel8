@@ -11,7 +11,8 @@ $menus = config('menu');
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{url('public/ad123')}}/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{url('public/ad123')}}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-    <link rel="stylesheet" href="{{url('public/ad123')}}/dist/css/adminlte.min.css?v=3.2.0">
+    <link rel="stylesheet" href="{{url('public/ad123')}}/dist/css/adminlte.css">
+    @yield('css')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -201,7 +202,10 @@ $menus = config('menu');
                                 <strong>{{$arr['msg']}}</strong>
                             </div>
                             <script>
-                                $(".alert").alert();
+                                setTimeout(function(){
+                                    $(".alert").fadeOut('slow');
+                                },2000);
+                                // $(".alert").fadeOut('slow');
                             </script>
                             @endisset
                             @yield('main')

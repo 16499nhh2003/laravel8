@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\UpdateRequest;
 
 class CategoryController extends Controller
 {
@@ -28,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');
     }
 
     /**
@@ -37,11 +39,12 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        if(Category::create($request->all())){
+            return redirect()->route('category.index')->with('success','Thêm mới danh mục thành công.');
+        }
     }
-
     /**
      * Display the specified resource.
      *
@@ -62,6 +65,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
+        return view('admin.category.edit',compact('category'));
     }
 
     /**
@@ -71,13 +75,15 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateRequest $request, Category $category)
     {
         //
+        $category->update($request->only('name','prioty','status'));
+        return redirect()->route('category.index')->with('success','Cập nhât danh mục thành công.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage.s
      *
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
@@ -93,3 +99,4 @@ class CategoryController extends Controller
         }
     }
 }
+

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // 
+        $data = Product::orderBy('id', 'ASC')->paginate(10); 
+        if(request()->keyword){
+            $data = Product::orderBy('id', 'ASC')->search()->paginate(10); 
+        }
+        return view('admin.product.index',compact('data'));
     }
 
     /**
@@ -24,7 +30,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        // 
+        $cats = Category::orderBy('id', 'ASC')->select('id', 'name')->get();
+        return view('admin.product.create', compact('cats'));
     }
 
     /**
@@ -36,6 +44,16 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        // if ($request->has('file_upload')) {
+        //     $file = $request->file_upload;
+        //     $ext = $file->extension();
+        //     $file_name = date('dmyhms') . '-' . 'product' . '.' . $ext;
+        //     $file->move(public_path('uploads'), $file_name);
+        //     $request->merge(['image' =>  $file_name]);
+        // }
+        if (Product::create($request->all())) {
+            return redirect()->route('product.index')->with('success', 'Tạo sản phẩm mới thành công.');
+        }
     }
 
     /**
@@ -81,5 +99,10 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        if($product->details()->count() > 0) {
+            return redirect()->route('product.index')->with('error','Không thế xóa sản phẩm.');
+        }
+        $product->delete();
+        return redirect()->route('product.index')->with('success','Xóa sản phẩm thành công.');
     }
 }

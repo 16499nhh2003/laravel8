@@ -9,12 +9,11 @@ class Category extends Model
 {
     use HasFactory;
     protected $table = 'category';
-    
+    protected $fillable = ['name','status','prioty'];
     // Join 1-n
     public function products(){
         return $this->hasMany(Product::class,'category_id','id');
     }
-
     // localScope
     public function scopeSearch($query){
         if(isset(request()->keyword)){

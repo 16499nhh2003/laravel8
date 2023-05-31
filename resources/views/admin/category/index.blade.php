@@ -31,7 +31,7 @@
             </td>
             <td>{{$dt->created_at->format('d-m-Y')}}</td>
             <td class="text-right">
-                    <a href="#" class="btn btn-sm btn-success">
+                    <a href="{{route('category.edit',$dt->id)}}" class="btn btn-sm btn-success">
                         <i class="fas fa-edit"></i>
                     </a>
                     <a href="{{route('category.destroy',$dt->id)}}" class="btn btn-sm btn-danger btndelete">
