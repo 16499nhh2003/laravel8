@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class AccountController extends Controller
 {
@@ -82,4 +86,32 @@ class AccountController extends Controller
     {
         //
     }
+
+    public function getlogin()
+    {
+        # code...
+        return view('layouts.login'); 
+    }
+    public function postLogin(Request $request)
+    {
+        # code...
+        $arr = ['email'=>$request->email,'password'=>$request->password];
+        if(Auth::attempt($arr)){
+            $dt =  DB::table('account')->select('role')->where([
+                ['email','like',$request->email],
+            ])->first();
+            if ($dt->role == "admin") {
+                return redirect()->route('admin.dashboard');
+            }
+            return redirect()->route('home.index')->with('username',Auth::user()->name) ;
+        }        
+        else{
+            return Redirect()->route('login')->with('error','Tên đăng nhập hoặc mật khẩu không đúng');
+        }
+    }
+    public function logout(){
+        #code...
+        Auth::logout();
+        return Redirect()->route('login');
+    }       
 }

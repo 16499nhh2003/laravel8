@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Route;
 //27/05/2023
 Route::get('/','HomeController@index')->name('home.index');
 Route::get('/shop','HomeController@shop')->name('home.shop');
+
 //admin 27/05/03  21:06
 Route::group(['prefix'=>'admin'],function(){
     Route::get('/','AdminController@dashboard')->name('admin.dashboard');
@@ -54,3 +55,9 @@ Route::group(['prefix'=>'admin'],function(){
     ]);
     Route::fallback('AdminController@error');
 }); 
+
+Route::group(['prefix'=>'login'],function(){
+    Route::get('/','AccountController@getLogin')->name('login');
+    Route::post('/','AccountController@postLogin');
+});
+Route::get('/logout','AccountController@logout')->name('logout');

@@ -118,9 +118,18 @@
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
+                            @if(Session::has('username'))
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
+                                <a href="#"><i class="fa fa-user"></i>{{Session::get('username')}}</a>
                             </div>
+                            <div class="header__top__right__auth">
+                                <a href="#">&nbspĐăng xuất</a>
+                            </div>
+                            @else
+                            <div class="header__top__right__auth">
+                                <a href="{{route('login')}}">Login</a>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
