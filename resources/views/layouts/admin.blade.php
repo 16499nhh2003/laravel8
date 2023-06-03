@@ -130,9 +130,13 @@ $menus = config('menu');
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  href="{{route('logout')}}" role="button">
+                    <form action="{{route('logout')}}" method="POST">
+                    @csrf 
+                    <button class="btn btn-light" type="submit">Đăng xuất</button>
+                    </form>
+                    <!-- <a class="nav-link"  href="{{route('logout')}}" role="button">
                         Đăng xuất
-                    </a>
+                    </a> -->
                 </li>
             </ul>
         </nav>

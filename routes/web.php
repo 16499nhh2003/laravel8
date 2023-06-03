@@ -13,37 +13,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Route::get('/test', function () {
-//     $mang = ['A','B','C'];
-//     $name = "Nguyễn Huy Hòa"; 
-//     return view('about',compact('mang','name'));
-// });
-
-// route test pagnigation  24/05/2023 19:14
-// Route::get('/testPagnigation','CategoryController@index');
-
-// test component  26/05/2023 12:24 
-// Route::get('/www',function(){
-//     return view('shop');
-// });
-
-// test component alert 25/5/2023 21:37
-// Route::get('/testAlert',function(){
-//     return view('components.alert');
-// });
-
-
-// Route::get('/ogani',function(){
-//     return view('layouts.site');
-// });
-
-//27/05/2023
-Route::get('/','HomeController@index')->name('home.index');
-Route::get('/shop','HomeController@shop')->name('home.shop');
+Route::get('/guest','HomeController@index')->name('guest.index');
+Route::get('/guest/shop','HomeController@shop')->name('guest.shop');
 
 //admin 27/05/03  21:06
-Route::group(['prefix'=>'admin'],function(){
-    Route::get('/','AdminController@dashboard')->name('admin.dashboard');
+Route::group(['prefix'=>'admin','middleware'=>'CheckLogin'],function(){
+    Route::get('/dashboard','AdminController@dashboard')->name('dashboard');
     Route::get('/test','AdminController@file')->name('admin.file');
     Route::resources([
         'category' => 'CategoryController', 
@@ -56,8 +31,8 @@ Route::group(['prefix'=>'admin'],function(){
     Route::fallback('AdminController@error');
 }); 
 
-Route::group(['prefix'=>'login'],function(){
-    Route::get('/','AccountController@getLogin')->name('login');
-    Route::post('/','AccountController@postLogin');
-});
-Route::get('/logout','AccountController@logout')->name('logout');
+
+Auth::routes();
+Route::post('/logout','Auth\LoginController@logout')->name('logout');
+Route::get('/login','Auth\LoginController@showLoginForm')->name('login')->middleware('CheckLogout'); 
+Route::post('/register','Auth\RegisterController@register')->name('registerPost');

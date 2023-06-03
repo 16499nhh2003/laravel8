@@ -2,7 +2,7 @@
     return [
         [
             'label' => 'Dashboard',
-            'route' =>  'admin.dashboard', 
+            'route' =>  'dashboard', 
             'icon' =>  'fa-home'
         ],
         [

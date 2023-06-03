@@ -20,4 +20,5 @@ class Account extends Model
     'status',
     'created_at',	
     'updated_at'];
+    protected $guarded = [];
 }
